@@ -13,7 +13,7 @@ import TextField from '@mui/material/TextField'
 import Badge from '@mui/material/Badge'
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import Tooltip from '@mui/material/Tooltip'
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profile from './Menus/Profile'
 
 function AppBar() {
@@ -45,12 +45,12 @@ function AppBar() {
 
           <Tooltip title="Notifications" sx={{ cursor: 'pointer' }}>
             <Badge color="secondary" variant="dot">
-              <NotificationsNoneIcon />
+              <NotificationsNoneIcon sx={{ color: 'primary.main' }} />
             </Badge>
           </Tooltip>
 
           <Tooltip title="Help" sx={{ cursor: 'pointer' }}>
-            <HelpOutlineIcon/>
+            <HelpOutlineIcon sx={{ color: 'primary.main' }}/>
           </Tooltip>
 
           <Profile/>
