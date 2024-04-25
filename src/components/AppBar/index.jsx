@@ -15,6 +15,9 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone'
 import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profile from './Menus/Profile'
+import InputAdornment from '@mui/material/InputAdornment'
+import AccountCircle from '@mui/icons-material/AccountCircle'
+import SearchIcon from '@mui/icons-material/Search';
 
 function AppBar() {
   return (
@@ -40,7 +43,19 @@ function AppBar() {
           <Button variant="outlined">Create</Button>
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <TextField id="outlined-search" label="Search..." type="search" size='small' />
+          <TextField
+            id="outlined-search"
+            label="Search..."
+            type="search"
+            size='small'
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              )
+            }}
+          />
           <ModeSelect/>
 
           <Tooltip title="Notifications" sx={{ cursor: 'pointer' }}>
