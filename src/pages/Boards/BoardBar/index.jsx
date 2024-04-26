@@ -53,10 +53,14 @@ function BoardBar() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Button variant="outlined" startIcon={<PersonAddIcon/>}>Invite</Button>
           <AvatarGroup max={4} sx={{
+            gap: '10px',
             '& .MuiAvatar-root': {
-              width: 34,
-              height: 34,
-              fontSize: 16
+              width: 32,
+              height: 32,
+              fontSize: 16,
+              border: 'none',
+              cursor: 'pointer',
+              '&:first-of-type': { bgcolor: '#a4b0be' }
             }
           }}>
             <Tooltip title="tanhtt">
