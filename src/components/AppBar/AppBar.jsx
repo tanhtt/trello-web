@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box'
-import ModeSelect from '~/components/ModeSelect'
+import ModeSelect from '~/components/ModeSelect/ModeSelect'
 import AppsIcon from '@mui/icons-material/Apps'
 import { ReactComponent as TrelloIcon } from '~/assets/mdi--trello.svg'
 import SvgIcon from '@mui/material/SvgIcon'
@@ -16,7 +16,6 @@ import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profile from './Menus/Profile'
 import InputAdornment from '@mui/material/InputAdornment'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import SearchIcon from '@mui/icons-material/Search';
 
 function AppBar() {
