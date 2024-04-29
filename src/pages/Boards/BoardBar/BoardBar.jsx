@@ -9,6 +9,8 @@ import AvatarGroup from '@mui/material/AvatarGroup'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import VpnLockIcon from '@mui/icons-material/VpnLock'
+import { capitalizeFirstLetter } from '~/utils/formaters'
 
 const MENU_STYLES = {
   color: 'primary.main',
@@ -27,7 +29,9 @@ const MENU_STYLES = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }) {
+  // Object Destructuring
+  // const { board } = probs
   return (
     <>
       <Box px={2} sx={{
@@ -41,7 +45,13 @@ function BoardBar() {
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Chip
             icon={<DashboardIcon/>}
-            label='Project 02'
+            label={board?.title}
+            clickable
+            sx={MENU_STYLES}
+          />
+          <Chip
+            icon={<VpnLockIcon/>}
+            label={capitalizeFirstLetter(board?.type)}
             clickable
             sx={MENU_STYLES}
           />
