@@ -2,50 +2,53 @@ import Box from '@mui/material/Box'
 import Column from './Column/Column'
 import { Button } from '@mui/material'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
+import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 
 
 function ListColumns({ columns }) {
   return (
-    <Box
-      sx={{
-        bgcolor: 'inherit',
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        '&::-webkit-scrollbar-track': {
-          m: 2
-        }
-      }}
-    >
-      {/* Box Column  */}
-      {columns?.map(column => <Column key={column._id} column={column} />)}
-
-      {/* Box Add New Column  */}
+    <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy} >
       <Box
         sx={{
-          bgcolor: (theme) => (theme.palette.mode === 'dark'? '#333643' : '#ffffff3d'),
-          minWidth: '200px',
-          maxWidth: '200px',
-          height: 'fit-content',
-          borderRadius: '6px',
-          mx: 2
+          bgcolor: 'inherit',
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          overflowX: 'auto',
+          overflowY: 'hidden',
+          '&::-webkit-scrollbar-track': {
+            m: 2
+          }
         }}
       >
-        <Button
-          startIcon={<NoteAddIcon />}
+        {/* Box Column  */}
+        {columns?.map(column => <Column key={column._id} column={column} />)}
+
+        {/* Box Add New Column  */}
+        <Box
           sx={{
-            color: 'white',
-            width: '100%',
-            justifyContent: 'start',
-            pl: 2.5,
-            py: 1
-          }}>
+            bgcolor: (theme) => (theme.palette.mode === 'dark'? '#333643' : '#ffffff3d'),
+            minWidth: '200px',
+            maxWidth: '200px',
+            height: 'fit-content',
+            borderRadius: '6px',
+            mx: 2
+          }}
+        >
+          <Button
+            startIcon={<NoteAddIcon />}
+            sx={{
+              color: 'white',
+              width: '100%',
+              justifyContent: 'start',
+              pl: 2.5,
+              py: 1
+            }}>
           Add New Column
-        </Button>
+          </Button>
+        </Box>
       </Box>
-    </Box>
+    </SortableContext>
   )
 }
 
