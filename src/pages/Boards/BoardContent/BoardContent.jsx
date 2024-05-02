@@ -1,7 +1,7 @@
 import ListColumns from './ListColumns/ListColumns'
 import Box from '@mui/material/Box'
 import { mapOrder } from '~/utils/sorts'
-import { DndContext, PointerSensor } from '@dnd-kit/core'
+import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { useEffect, useState } from 'react'
 import { arrayMove } from '@dnd-kit/sortable'
 import {
@@ -10,6 +10,14 @@ import {
   useSensor,
   useSensors
 } from '@dnd-kit/core'
+
+import Column from './ListColumns/Column/Column'
+import Card from './ListColumns/Column/ListCards/Card/Card'
+
+const ACTIVE_DRAG_ITEM_TYPE = {
+  COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
+  CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD'
+}
 
 function BoardContent({ board }) {
   // https://docs.dndkit.com/api-documentation/sensors
@@ -25,9 +33,21 @@ function BoardContent({ board }) {
 
   const [orderedColumnState, setOrderedColumnState] = useState([])
 
+  //Just dnd either card or column in a time
+  const [activeDragItemId, setActiveDragItemId] = useState(null)
+  const [activeDragItemType, setActiveDragItemType] = useState(null)
+  const [activeDragItemData, setActiveDragItemData] = useState(null)
+
   useEffect(() => {
     setOrderedColumnState(mapOrder(board?.columns, board?.columnOrderIds, '_id'))
   }, [board])
+
+  const handleDragStart = (event) => {
+    console.log('handleDragStart: ', event)
+    setActiveDragItemId(event?.active?.id)
+    setActiveDragItemType(event?.active?.data?.current?.columnId ? ACTIVE_DRAG_ITEM_TYPE.CARD : ACTIVE_DRAG_ITEM_TYPE.COLUMN)
+    setActiveDragItemData(event?.active?.data?.current)
+  }
 
   const handleDragEnd = (event) => {
     console.log('handledragend ', event )
@@ -54,7 +74,7 @@ function BoardContent({ board }) {
 
   return (
     <>
-      <DndContext onDragEnd={handleDragEnd} sensors={sensors}>
+      <DndContext onDragEnd={handleDragEnd} onDragStart={handleDragStart} sensors={sensors}>
         <Box sx={{
           backgroundColor: 'primary.main',
           width: '100%',
@@ -63,6 +83,13 @@ function BoardContent({ board }) {
           p: '10px 0'
         }}>
           <ListColumns columns={orderedColumnState} />
+          <DragOverlay>
+            {!activeDragItemType && null}
+            {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) &&
+            <Column column={activeDragItemData} />}
+            {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) &&
+            <Card card={activeDragItemData} />}
+          </DragOverlay>
         </Box>
       </DndContext>
     </>
