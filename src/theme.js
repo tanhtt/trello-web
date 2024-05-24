@@ -16,18 +16,18 @@ const theme = extendTheme({
     columnFooterHeight: COLUMN_FOOTER_HEIGHT
   },
   colorSchemes: {
-    // light: {
-    //   palette: {
-    //     primary: teal,
-    //     secondary: deepOrange
-    //   }
-    // },
-    // dark: {
-    //   palette: {
-    //     primary: cyan,
-    //     secondary: orange
-    //   }
-    // }
+    light: {
+      palette: {
+        primary: teal,
+        secondary: deepOrange
+      }
+    },
+    dark: {
+      palette: {
+        primary: cyan,
+        secondary: orange
+      }
+    }
   },
   components: {
     MuiCssBaseline: {
@@ -43,7 +43,7 @@ const theme = extendTheme({
           },
           '*::-webkit-scrollbar-thumb:hover': {
             backgroundColor: '#dcdde1'
-          },
+          }
         }
       }
     },
