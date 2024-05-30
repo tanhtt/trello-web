@@ -2,7 +2,7 @@ import ListColumns from './ListColumns/ListColumns'
 import Box from '@mui/material/Box'
 import { mapOrder } from '~/utils/sorts'
 import { DndContext, DragOverlay } from '@dnd-kit/core'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { arrayMove } from '@dnd-kit/sortable'
 import {
   MouseSensor,
@@ -141,6 +141,48 @@ function BoardContent({ board }) {
       // Video 35
       if (oldColumnWhenDragingCard._id !== overColumn._id) {
         console.log('Hành động kéo thả card giũa 2 column khác nhau')
+        setOrderedColumnState(prevColumns => {
+          const overCardIndex = overColumn.cards.findIndex(card => card._id === overCardId)
+
+          // Logic calculate 'new card index'
+          let newCardIndex
+          const isBelowOverItem = active.rect.current.translated &&
+            active.rect.current.translated.top > over.rect.top + over.rect.height
+          const modifier = isBelowOverItem ? 1: 0
+          newCardIndex = overCardIndex >= 0 ? overCardIndex + modifier : overColumn?.cards?.length + 1
+
+          //Clone old OrderedColumnState to new array to excute
+          const nextColumns = cloneDeep(prevColumns)
+          const nextActiveColumn = nextColumns.find(column => column._id === activeColumn._id)
+          const nextOverColumn = nextColumns.find(column => column._id === overColumn._id)
+
+          if (nextActiveColumn) {
+            // Delete card position in active column
+            nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
+
+            //Update cardOrderIds for data
+            nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
+          }
+
+          if (nextOverColumn) {
+            // Test that Is dragging card exist in over column yet, If there is so delete it
+            nextOverColumn.cards = nextOverColumn.cards.filter(card => card._id !== activeDraggingCardId)
+
+            // Đối với trường hợp drag end thì phải cập nhật lại chuẩn dữ liệu columnId trong card sau khi kéo card giữa hai column khác nhau
+            const rebuild_activeDragingCardData = {
+              ...activeDraggingCardData,
+              columnId: nextOverColumn._id
+            }
+
+            // Add dragging card to overcolumn
+            nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDragingCardData)
+
+            //Update cardOrderIds for data
+            nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
+          }
+
+          return nextColumns
+        })
       } else {
         // console.log('Hành động kéo thả card giũa 1 column')
         //Take old position from active item
@@ -192,6 +234,10 @@ function BoardContent({ board }) {
     setActiveDragItemType(null)
     setOldColumnWhenDragingCard(null)
   }
+
+  const collisionDetectionStrategy = useCallback((args) => {
+    
+  }, [])
 
   return (
     <>
