@@ -40,15 +40,15 @@ function Card({ card }) {
       sx={{
         cursor: 'pointer',
         boxShadow: '0 1px 1px rgba(0,0,0,0.2)',
-        overflow: 'unset'
+        overflow: 'unset',
+        // display: card?FE_
+        border: '1px solid transparent',
+        '&:hover': { borderColor: (theme) => theme.palette.primary.main }
       }}>
-      {card?.cover &&
-        <CardMedia
-          component='img'
-          sx={{ height: 140 }}
-          image={card?.cover}
-          title=""
-        />
+      {card?.cover && <CardMedia
+        sx={{ height: 140 }}
+        image={card?.cover}
+      />
       }
       <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
         <Typography>

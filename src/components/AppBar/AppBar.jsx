@@ -16,9 +16,13 @@ import Tooltip from '@mui/material/Tooltip'
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import Profile from './Menus/Profile'
 import InputAdornment from '@mui/material/InputAdornment'
-import SearchIcon from '@mui/icons-material/Search';
+import SearchIcon from '@mui/icons-material/Search'
+import CloseIcon from '@mui/icons-material/Close'
+import { useState } from 'react'
 
 function AppBar() {
+  const [searchValue, setSearchValue] = useState('')
+
   return (
     <>
       <Box px={2} sx={{
@@ -43,14 +47,38 @@ function AppBar() {
         </Box>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <TextField
-            id="outlined-search"
-            label="Search..."
-            type="search"
+            id="outlined-input"
+            label='Search'
+            type="text"
             size='small'
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            sx={{
+              minWidth: '120px',
+              maxWidth: '180px',
+              '& label': { color: 'primary.main' },
+              '& input': { color: 'primary.main' },
+              '& label.Mui-focused': { color: 'primary.main' },
+              '& .MuiOutlinedInput-root': {
+                '& fieldset': { borderColor: 'primary.main' },
+                '&:hover fieldset': { borderColor: 'primary.main' },
+                '&.Mui-focused fieldset': { borderColor: 'primary.main' }
+              }
+            }}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                  <SearchIcon sx={{ color: 'primary.main' }} />
+                </InputAdornment>
+              ),
+              endAdornment: (
+                <InputAdornment position='end'>
+                  <CloseIcon
+                    fontSize='small'
+                    sx={{ color: searchValue ? 'primary.main' : 'transparent', cursor: 'pointer' }}
+                    onClick={() => setSearchValue('')}
+                    edge="end"
+                  />
                 </InputAdornment>
               )
             }}

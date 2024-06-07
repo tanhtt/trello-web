@@ -18,7 +18,7 @@ function ModeSelect() {
 
   return (
     <FormControl size="small">
-      <InputLabel id="select-dark-light-mode">Age</InputLabel>
+      <InputLabel id="select-dark-light-mode">Mode</InputLabel>
       <Select
         labelId="select-dark-light-mode"
         id="dark-light-mode"
