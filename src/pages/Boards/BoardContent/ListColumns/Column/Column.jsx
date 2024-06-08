@@ -22,6 +22,7 @@ import { CSS } from '@dnd-kit/utilities'
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import theme from '~/theme'
+import { toast } from 'react-toastify'
 
 function Column({ column }) {
   const {
@@ -56,7 +57,7 @@ function Column({ column }) {
   const [newCardTitle, setNewCardTitle] = useState('')
   const addNewCard = () => {
     if (!newCardTitle) {
-      console.error('Please enter Card title')
+      toast.error('Please enter card title!')
       return
     }
 
@@ -201,6 +202,7 @@ function Column({ column }) {
                 type="text"
                 size='small'
                 autoFocus
+                data-no-dnd='true'
                 value={newCardTitle}
                 onChange={(e) => setNewCardTitle(e.target.value)}
                 sx={{
@@ -232,6 +234,7 @@ function Column({ column }) {
                   color='success'
                   size='medium'
                   onClick={addNewCard}
+                  data-no-dnd='true'
                   sx={{
                     boxShadow:'none',
                     border: '0.5px solid',
