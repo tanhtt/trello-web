@@ -5,8 +5,8 @@ import { DndContext, DragOverlay } from '@dnd-kit/core'
 import { useCallback, useEffect, useState } from 'react'
 import { arrayMove } from '@dnd-kit/sortable'
 import {
-  MouseSensor,
-  TouchSensor,
+  // MouseSensor,
+  // TouchSensor,
   useSensor,
   useSensors,
   closestCorners
@@ -15,6 +15,8 @@ import {
 import Column from './ListColumns/Column/Column'
 import Card from './ListColumns/Column/ListCards/Card/Card'
 import { cloneDeep } from 'lodash'
+
+import { MouseSensor, TouchSensor } from '~/customLibs/DndKitSensors'
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLUMN',
@@ -235,9 +237,8 @@ function BoardContent({ board }) {
     setOldColumnWhenDragingCard(null)
   }
 
-  const collisionDetectionStrategy = useCallback((args) => {
-    
-  }, [])
+  // const collisionDetectionStrategy = useCallback((args) => {
+  // }, [])
 
   return (
     <>
