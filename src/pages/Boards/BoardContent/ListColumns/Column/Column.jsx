@@ -24,7 +24,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import theme from '~/theme'
 import { toast } from 'react-toastify'
 
-function Column({ column }) {
+function Column({ column, createNewCard }) {
   const {
     attributes,
     listeners,
@@ -55,14 +55,18 @@ function Column({ column }) {
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
 
   const [newCardTitle, setNewCardTitle] = useState('')
-  const addNewCard = () => {
+  const addNewCard = async () => {
     if (!newCardTitle) {
       toast.error('Please enter card title!')
       return
     }
+    const newCardData = {
+      title: newCardTitle,
+      columnId: column._id
+    }
 
     // Call API here
-    // console.log(newCardTitle)
+    await createNewCard(newCardData)
 
     // Close input
     toggleOpenNewCardForm()

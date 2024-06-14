@@ -8,19 +8,29 @@ import { toast } from 'react-toastify'
 import CloseIcon from '@mui/icons-material/Close'
 
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Please enter column title!')
       return
     }
 
-    // Call API here
-    // console.log(newColumnTitle)
+    // Create column data to call API
+    const newColumnData = {
+      title: newColumnTitle
+    }
+
+    /**
+     * Gọi lên props function createNewColumn ở componenet cha cao nhât _id.jsx (bởi vì khi tạo column phải cập nhật board)
+     * Sau khóa học này có thể tìm hiểu về Redux. Vì redux sẽ giúp chúng ta gọi luông API ở đây
+     * không cần phải gọi từ nhiều tầng cha component như vậy, việc dùng redux sẽ giúp clear code hơn
+     */
+
+    await createNewColumn(newColumnData)
 
     // Close input
     toggleOpenNewColumnForm()
@@ -43,7 +53,7 @@ function ListColumns({ columns }) {
         }}
       >
         {/* Box Column  */}
-        {columns?.map(column => <Column key={column._id} column={column} />)}
+        {columns?.map(column => <Column key={column._id} column={column} createNewCard={createNewCard} />)}
 
         {/* Box Add New Column  */}
         {!openNewColumnForm
